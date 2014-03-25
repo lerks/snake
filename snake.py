@@ -54,24 +54,24 @@ while True:
             direction = dir_
     elif event.type == 31:
         head = ((snake[0][0] + direction[0]) % grid[0], (snake[0][1] + direction[1]) % grid[1])
-        head_content = 's'
         tail = snake[-1]
-
-        if 's' in content[head[0]][head[1]]:
-            sys.exit()
-        elif 'm' in content[head[0]][head[1]]:
-            head_content = 'sm'
-            mouse = get_mouse_coord()
-            content[mouse[0]][mouse[1]] = 'm'
-
-        snake = [head] + snake
-        content[head[0]][head[1]] = head_content
 
         if 'm' in content[tail[0]][tail[1]]:
             content[tail[0]][tail[1]] = 's'
         else:
             snake = snake[:-1]
             content[tail[0]][tail[1]] = ''
+
+        if 's' in content[head[0]][head[1]]:
+            sys.exit()
+        elif 'm' in content[head[0]][head[1]]:
+            content[head[0]][head[1]] = 'sm'
+            mouse = get_mouse_coord()
+            content[mouse[0]][mouse[1]] = 'm'
+            snake = [head] + snake
+        else:
+            content[head[0]][head[1]] = 's'
+            snake = [head] + snake
 
         actual_direction = direction
 
